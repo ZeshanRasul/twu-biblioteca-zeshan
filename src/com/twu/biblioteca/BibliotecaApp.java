@@ -10,11 +10,11 @@ public class BibliotecaApp {
     }
 
     public static void run(){
-        Message.welcomeMessage();
-        LibraryCreator libraryCreator = new LibraryCreator();
-        LibraryLister libraryLister = new LibraryLister();
-        ArrayList<Book> bookLibrary = libraryCreator.createBookLibrary();
-        libraryLister.displayBooks(bookLibrary);
+        Message message = new Message();
+        message.welcomeMessage();
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.displayMenu();
+        mainMenu.runCommand(mainMenu.menuScanner());
     }
 
 
