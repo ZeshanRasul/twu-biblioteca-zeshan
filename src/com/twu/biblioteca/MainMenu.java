@@ -13,6 +13,7 @@ public class MainMenu {
     public ArrayList<Book> bookLibrary;
 
     public static void displayMenu() {
+        System.out.println();
         System.out.println("What would you like to do today?");
         System.out.println("Please enter the correct number");
         System.out.println("1. List books");

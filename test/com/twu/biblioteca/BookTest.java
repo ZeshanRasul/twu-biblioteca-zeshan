@@ -36,11 +36,17 @@ public class BookTest {
     }
 
     @Test
+    public void checkOutMethodShouldSetCheckedOutValueToFalse() {
+        book.checkOut();
+        assertEquals(true, book.checkedOut);
+    }
+
+    @Test
     public void printDetailsShouldPrintBookDetailsInColumns(){
         outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
         System.setOut(printStream);
         book.printDetails();
-        assertEquals("\nBlink  Malcolm Gladwell  2005 ", outputStream.toString());
+        assertEquals("\nBlink                      Malcolm Gladwell           2005", outputStream.toString());
     }
 }
