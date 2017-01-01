@@ -16,6 +16,7 @@ public class MainMenu {
         System.out.println("What would you like to do today?");
         System.out.println("Please enter the correct number");
         System.out.println("1. List books");
+        System.out.println("9. Quit");
     }
 
     public int menuScanner() {
@@ -24,10 +25,17 @@ public class MainMenu {
         return selection;
     }
 
-    public void runCommand(int optionNumber) {
+    public boolean runCommand(int optionNumber) {
         switch(optionNumber) {
             case 1: bookLibrary = libraryCreator.createBookLibrary();
                     libraryLister.displayBooks(bookLibrary);
+                    break;
+            case 9: System.out.print("Thank you for using Biblioteca!");
+                    return BibliotecaApp.runMenu = false;
+            default:
+                System.out.print("Please enter a valid option!");
+                break;
         }
+        return true;
     }
 }

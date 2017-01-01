@@ -1,11 +1,8 @@
 package com.twu.biblioteca;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.sun.jmx.snmp.ThreadContext.contains;
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.junit.matchers.JUnitMatchers.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,10 +41,21 @@ public class MainMenuTest {
     }
 
     @Test
-
     public void runCommandRunsACommandBasedOnInput() {
         mainMenu.runCommand(1);
         assertThat(outputStream.toString(), allOf(containsString("Blink"), containsString("The Alchemist"), containsString("The Prince")));
+    }
+
+    @Test
+    public void userToldToEnterValidChoiceWhenInvalidChoiceMade() {
+        mainMenu.runCommand(1000);
+        assertEquals("Please enter a valid option!", outputStream.toString());
+    }
+
+    @Test
+    public void quitOptionAvailableOnMenu() {
+        mainMenu.runCommand(9);
+        assertEquals("Thank you for using Biblioteca!", outputStream.toString());
     }
 
 
