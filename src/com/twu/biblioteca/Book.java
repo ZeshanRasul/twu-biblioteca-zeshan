@@ -31,7 +31,7 @@ public class Book {
 
 
     public void printDetails() {
-        System.out.printf("\n" + "%-5.30s  %-5.30s  %-5.30s", getTitle(), getAuthor(), getYear());
+        System.out.printf("\n" + "%-25.30s  %-25.30s  %-25.30s", getTitle(), getAuthor(), getYear());
     }
 }
 
