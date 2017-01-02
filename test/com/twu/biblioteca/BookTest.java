@@ -36,9 +36,15 @@ public class BookTest {
     }
 
     @Test
-    public void checkOutMethodShouldSetCheckedOutValueToFalse() {
+    public void checkOutMethodShouldSetCheckedOutValueToTrue() {
         book.checkOut();
         assertEquals(true, book.checkedOut);
+    }
+
+    @Test
+    public void returnBookMethodShouldSetCheckedOutValueToFalse() {
+        book.returnBook();
+        assertEquals(false, book.checkedOut);
     }
 
     @Test

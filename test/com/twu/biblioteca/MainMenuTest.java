@@ -59,7 +59,7 @@ public class MainMenuTest {
     @Test
     public void userCanCheckOutBookUsingOption() {
         String data = "Blink";
-        InputStream stdin = System.in;
+//        InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         mainMenu.createBookLibrary();
         mainMenu.runCommand(2);
@@ -76,6 +76,27 @@ public class MainMenuTest {
         System.setIn(new ByteArrayInputStream(secondData.getBytes()));
         mainMenu.runCommand(2);
         assertThat(outputStream.toString(), containsString("This book is not available"));
+    }
+
+    @Test
+    public void userCanReturnBookUsingMenuOption() {
+        String data = "The Alchemist";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createBookLibrary();
+        mainMenu.runCommand(2);
+        String secondData = "The Alchemist";
+        System.setIn(new ByteArrayInputStream(secondData.getBytes()));
+        mainMenu.runCommand(3);
+        assertThat(outputStream.toString(), containsString("Thank you for returning The Alchemist"));
+    }
+
+    @Test
+    public void userCannotReturnBooksThatAreNotCheckedOut() {
+        String data = "The Prince";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createBookLibrary();
+        mainMenu.runCommand(3);
+        assertThat(outputStream.toString(), containsString("You cannot return this book"));
     }
 
 
