@@ -14,8 +14,9 @@ public class BibliotecaApp {
     public static void run(){
         Message message = new Message();
         message.welcomeMessage();
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.createBookLibrary();
         while(runMenu) {
-            MainMenu mainMenu = new MainMenu();
             mainMenu.displayMenu();
             mainMenu.runCommand(mainMenu.menuScanner());
         }

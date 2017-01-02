@@ -5,7 +5,10 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 /**
@@ -16,6 +19,7 @@ public class LibraryListerTest {
     private ByteArrayOutputStream outputStream;
     private LibraryCreator libraryCreator;
     private LibraryLister libraryLister;
+    private ArrayList<Book> bookList;
 
     @Before
     public void beforeEach() {
@@ -25,11 +29,21 @@ public class LibraryListerTest {
         libraryCreator = new LibraryCreator();
     }
 
+    @Test
+    public void bookShouldNotBeDisplayedInListIfCheckedOut() {
+        libraryLister = new LibraryLister();
+        bookList = libraryCreator.createBookLibrary();
+        bookList.get(0).checkOut();
+        libraryLister.displayBooks((bookList));
+        assertThat(outputStream.toString(), not(containsString("Blink")));
+
+    }
+
 
     @Test
     public void displayBooksShouldListTheDetailsOfAllBooksInLibrary() {
         libraryLister = new LibraryLister();
         libraryLister.displayBooks(libraryCreator.createBookLibrary());
-        assertEquals("\n\nTitle                      Author                     Year                     \n" + "Blink                      Malcolm Gladwell           2005                     \n" + "The Alchemist              Paulo Coelho               1988                     \n" + "The Prince                 Niccolò Machiavelli        1532                     ", outputStream.toString());
+        assertEquals("\n\nTitle                      Author                     Year                     \n" + "Blink                      Malcolm Gladwell           2005\n" + "The Alchemist              Paulo Coelho               1988\n" + "The Prince                 Niccolò Machiavelli        1532", outputStream.toString());
     }
 }

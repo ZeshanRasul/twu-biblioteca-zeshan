@@ -9,8 +9,10 @@ public class LibraryLister {
 
     public void displayBooks(ArrayList<Book> bookList) {
         System.out.printf("\n" + "\n" + "%-25.30s  %-25.30s  %-25.30s", "Title", "Author", "Year");
-        for (Book b : bookList) {
-            b.printDetails();
+        for(Book b : bookList) {
+            if (!b.checkedOut) {
+                b.printDetails();
+            }
         }
     }
 
