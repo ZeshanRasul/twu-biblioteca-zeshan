@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 
 /**
@@ -25,6 +27,15 @@ public class MovieLibraryListerTest {
         PrintStream printStream = new PrintStream(outputStream);
         System.setOut(printStream);
         movieLibraryCreator = new MovieLibraryCreator();
+    }
+
+    @Test
+    public void movieShouldNotBeDisplayInListIfCheckedout() {
+        movieLibraryLister = new MovieLibraryLister();
+        movieList = movieLibraryCreator.createMovieLibrary();
+        movieList.get(0).checkOut();
+        movieLibraryLister.displayMovies(movieList);
+        assertThat(outputStream.toString(), not(containsString("The Godfather     1972")));
     }
 
     @Test

@@ -34,7 +34,7 @@ public class LibraryListerTest {
         libraryLister = new LibraryLister();
         bookList = libraryCreator.createBookLibrary();
         bookList.get(0).checkOut();
-        libraryLister.displayBooks((bookList));
+        libraryLister.displayBooks(bookList);
         assertThat(outputStream.toString(), not(containsString("Blink")));
 
     }
