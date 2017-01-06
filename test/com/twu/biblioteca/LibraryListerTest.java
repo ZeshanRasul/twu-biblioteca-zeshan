@@ -39,7 +39,6 @@ public class LibraryListerTest {
 
     }
 
-
     @Test
     public void displayBooksShouldListTheDetailsOfAllBooksInLibrary() {
         libraryLister = new LibraryLister();
