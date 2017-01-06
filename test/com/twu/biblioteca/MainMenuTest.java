@@ -59,7 +59,6 @@ public class MainMenuTest {
     @Test
     public void userCanCheckOutBookUsingOption() {
         String data = "Blink";
-//        InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         mainMenu.createBookLibrary();
         mainMenu.runCommand(2);
@@ -97,6 +96,11 @@ public class MainMenuTest {
         mainMenu.createBookLibrary();
         mainMenu.runCommand(3);
         assertThat(outputStream.toString(), containsString("You cannot return this book"));
+    }
+
+    @Test
+    public void userCanCheckOutMovieUsingOption() {
+
     }
 
 
