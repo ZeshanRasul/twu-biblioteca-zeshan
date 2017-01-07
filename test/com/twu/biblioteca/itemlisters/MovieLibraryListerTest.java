@@ -1,5 +1,8 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.itemlisters;
 
+import com.twu.biblioteca.itemlisters.MovieLibraryLister;
+import com.twu.biblioteca.items.Movie;
+import com.twu.biblioteca.librarycreators.MovieLibraryCreator;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,8 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.itemlisters;
 
+import com.twu.biblioteca.itemlisters.LibraryLister;
+import com.twu.biblioteca.items.Book;
+import com.twu.biblioteca.librarycreators.LibraryCreator;
 import org.junit.Before;
 import org.junit.Test;
 

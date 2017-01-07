@@ -1,5 +1,6 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.display;
 
+import com.twu.biblioteca.display.Message;
 import org.junit.Before;
 import org.junit.Test;
 

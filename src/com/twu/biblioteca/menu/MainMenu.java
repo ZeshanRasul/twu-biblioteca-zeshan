@@ -1,4 +1,12 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.menu;
+
+import com.twu.biblioteca.BibliotecaApp;
+import com.twu.biblioteca.itemlisters.LibraryLister;
+import com.twu.biblioteca.itemlisters.MovieLibraryLister;
+import com.twu.biblioteca.items.Book;
+import com.twu.biblioteca.items.Movie;
+import com.twu.biblioteca.librarycreators.LibraryCreator;
+import com.twu.biblioteca.librarycreators.MovieLibraryCreator;
 
 import java.util.ArrayList;
 import java.util.Scanner;

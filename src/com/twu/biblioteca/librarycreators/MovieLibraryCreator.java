@@ -1,4 +1,6 @@
-package com.twu.biblioteca;
+package com.twu.biblioteca.librarycreators;
+
+import com.twu.biblioteca.items.Movie;
 
 import java.util.ArrayList;
 import java.util.Arrays;
