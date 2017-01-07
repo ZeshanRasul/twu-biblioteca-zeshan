@@ -1,5 +1,7 @@
 package com.twu.biblioteca.items;
 
+import com.twu.biblioteca.user.User;
+
 /**
  * Created by zeshanrasul on 30/12/2016.
  */
@@ -9,6 +11,7 @@ public class Book {
     private String author;
     private int year;
     public boolean checkedOut;
+    private User holder;
 
     public Book(String t, String a, int y) {
         title = t;
@@ -42,6 +45,10 @@ public class Book {
 
     public void returnBook() {
         checkedOut = false;
+    }
+
+    public User getHolder() {
+        return holder;
     }
 }
 

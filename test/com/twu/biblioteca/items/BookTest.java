@@ -37,6 +37,11 @@ public class BookTest {
     }
 
     @Test
+    public void getHolderShouldReturnTheNoUserByDefault() {
+        assertEquals(null, book.getHolder());
+    }
+
+    @Test
     public void checkOutMethodShouldSetCheckedOutValueToTrue() {
         book.checkOut();
         assertEquals(true, book.checkedOut);
