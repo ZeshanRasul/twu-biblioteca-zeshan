@@ -10,7 +10,10 @@ public class MainMenu {
 
     private LibraryCreator libraryCreator = new LibraryCreator();
     private LibraryLister libraryLister = new LibraryLister();
+    private MovieLibraryCreator movieLibraryCreator = new MovieLibraryCreator();
+    private MovieLibraryLister movieLibraryLister = new MovieLibraryLister();
     public ArrayList<Book> bookLibrary;
+    public ArrayList<Movie> movieLibrary;
 
     public static void displayMenu() {
         System.out.println();
@@ -20,6 +23,9 @@ public class MainMenu {
         System.out.println("1. List books");
         System.out.println("2. Check out book");
         System.out.println("3. Return book");
+        System.out.println("4. List movies");
+        System.out.println("5. Check out movie");
+        System.out.println("6. Return movie");
         System.out.println("9. Quit");
     }
 
@@ -38,6 +44,13 @@ public class MainMenu {
                     break;
             case 3: returnBook();
                     break;
+            case 4: listMovieLibrary();
+                    break;
+            case 5: listMovieLibrary();
+                    checkOutMovie();
+                    break;
+            case 6: returnMovie();
+                    break;
             case 9: System.out.print("Thank you for using Biblioteca!");
                     return BibliotecaApp.runMenu = false;
             default:
@@ -45,25 +58,6 @@ public class MainMenu {
                 break;
         }
         return true;
-    }
-
-    private void returnBook() {
-        System.out.println();
-        System.out.println("Which book would you like to return?");
-        Scanner newScanner = new Scanner(System.in);
-        String bookName = newScanner.nextLine();
-        System.out.println(bookName);
-        for (Book b : bookLibrary) {
-            if (b.getTitle().equals(bookName)) {
-                if (b.checkedOut) {
-                    b.returnBook();
-                    System.out.println("Thank you for returning " + bookName);
-                    break;
-                } else {
-                    System.out.println("You cannot return this book");
-                }
-            }
-        }
     }
 
     public void createBookLibrary() {
@@ -93,4 +87,69 @@ public class MainMenu {
 
         }
     }
+
+    private void returnBook() {
+        System.out.println();
+        System.out.println("Which book would you like to return?");
+        Scanner newScanner = new Scanner(System.in);
+        String bookName = newScanner.nextLine();
+//        System.out.println(bookName);
+        for (Book b : bookLibrary) {
+            if (b.getTitle().equals(bookName)) {
+                if (b.checkedOut) {
+                    b.returnBook();
+                    System.out.println("Thank you for returning " + bookName);
+                    break;
+                } else {
+                    System.out.println("You cannot return this book");
+                }
+            }
+        }
+    }
+
+    public void createMovieLibrary() {
+        movieLibrary = movieLibraryCreator.createMovieLibrary();
+    }
+
+    public void listMovieLibrary() {
+        movieLibraryLister.displayMovies(movieLibrary);
+    }
+
+    private void checkOutMovie() {
+        System.out.println();
+        System.out.println("Please select the movie to check out");
+        Scanner newScanner = new Scanner(System.in);
+        String movieName = newScanner.nextLine();
+        System.out.println(movieName);
+        for (Movie m : movieLibrary) {
+            if (m.getTitle().equals(movieName)) {
+                if (!m.checkedOut) {
+                    m.checkOut();
+                    System.out.println("You have successfully checked out " + m.getTitle());
+                    break;
+                } else {
+                    System.out.println("This movie is not available");
+                }
+            }
+        }
+    }
+
+    private void returnMovie() {
+        System.out.println();
+        System.out.println("Which movie would you like to return?");
+        Scanner newScanner = new Scanner(System.in);
+        String movieName = newScanner.nextLine();
+        for (Movie m : movieLibrary) {
+            if (m.getTitle().equals(movieName)) {
+                if (m.checkedOut) {
+                    m.returnMovie();
+                    System.out.println("Thank you for returning " + m.getTitle());
+                    break;
+                } else {
+                    System.out.println("You cannot return this movie");
+                }
+            }
+        }
+    }
+
 }

@@ -16,6 +16,7 @@ public class BibliotecaApp {
         message.welcomeMessage();
         MainMenu mainMenu = new MainMenu();
         mainMenu.createBookLibrary();
+        mainMenu.createMovieLibrary();
         while(runMenu) {
             mainMenu.displayMenu();
             mainMenu.runCommand(mainMenu.menuScanner());

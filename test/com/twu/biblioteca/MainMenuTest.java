@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.allOf;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -100,9 +99,45 @@ public class MainMenuTest {
 
     @Test
     public void userCanCheckOutMovieUsingOption() {
-
+        String data = "The Godfather: Part III";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createMovieLibrary();
+        mainMenu.runCommand(5);
+        assertThat(outputStream.toString(), containsString("You have successfully checked out The Godfather: Part III"));
     }
 
+    @Test
+    public void userCannotCheckOutAMovieThatIsAlreadyCheckedOut() {
+        String data = "The Godfather: Part III";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createMovieLibrary();
+        mainMenu.runCommand(5);
+        String newData = "The Godfather: Part III";
+        System.setIn(new ByteArrayInputStream(newData.getBytes()));
+        mainMenu.runCommand(5);
+        assertThat(outputStream.toString(), containsString("This movie is not available"));
+    }
+
+    @Test
+    public void userCanReturnMovieThatHasBeenCheckedOut() {
+        String data = "The Godfather";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createMovieLibrary();
+        mainMenu.runCommand(5);
+        String secondData = "The Godfather";
+        System.setIn(new ByteArrayInputStream(secondData.getBytes()));
+        mainMenu.runCommand(6);
+        assertThat(outputStream.toString(), containsString("Thank you for returning The Godfather"));
+    }
+
+    @Test
+    public void userCannotReturnAMovieThatIsNotCheckedOut() {
+        String data = "The Godfather: Part III";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createMovieLibrary();
+        mainMenu.runCommand(6);
+        assertThat(outputStream.toString(), containsString("You cannot return this movie"));
+    }
 
     @Test
     public void quitOptionAvailableOnMenu() {
