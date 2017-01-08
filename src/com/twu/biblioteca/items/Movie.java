@@ -1,5 +1,7 @@
 package com.twu.biblioteca.items;
 
+import com.twu.biblioteca.user.User;
+
 /**
  * Created by zeshanrasul on 06/01/2017.
  */
@@ -10,6 +12,7 @@ public class Movie {
     private String director;
     private int rating;
     public boolean checkedOut;
+    public User holder;
 
     public Movie(String t, int y, String d, int r) {
         title = t;
@@ -46,5 +49,13 @@ public class Movie {
 
     public void printDetails() {
         System.out.printf("\n" + "%-25.30s  %-25.30s  %-25.30s  %-1.30s", getTitle(), getYear(), getDirector(), getRating());
+    }
+
+    public void setHolder(User user) {
+        holder = user;
+    }
+
+    public User getHolder() {
+        return holder;
     }
 }

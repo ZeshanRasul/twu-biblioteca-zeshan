@@ -11,7 +11,7 @@ public class Book {
     private String author;
     private int year;
     public boolean checkedOut;
-    private User holder;
+    public User holder;
 
     public Book(String t, String a, int y) {
         title = t;
@@ -45,6 +45,10 @@ public class Book {
 
     public void returnBook() {
         checkedOut = false;
+    }
+
+    public void setHolder(User user) {
+        holder = user;
     }
 
     public User getHolder() {

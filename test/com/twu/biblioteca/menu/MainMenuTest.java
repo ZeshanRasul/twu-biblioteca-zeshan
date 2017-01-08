@@ -1,4 +1,6 @@
 package com.twu.biblioteca.menu;
+import com.twu.biblioteca.user.User;
+import com.twu.biblioteca.user.UserSystem;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +19,8 @@ import static org.junit.Assert.*;
 public class MainMenuTest {
     private ByteArrayOutputStream outputStream;
     private MainMenu mainMenu = new MainMenu();
-
+    private UserSystem userSystem = new UserSystem();
+    private User user = new User ("111-1111", "password");
     @Before
     public void beforeEach() {
         outputStream = new ByteArrayOutputStream();
@@ -61,6 +64,44 @@ public class MainMenuTest {
         mainMenu.createBookLibrary();
         mainMenu.runCommand(2);
         assertThat(outputStream.toString(), containsString("You have successfully checked out Blink"));
+    }
+
+    @Test
+    public void userCannotCheckOutBookIfNotLoggedIn() {
+        String data = "Blink";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createBookLibrary();
+        mainMenu.runCommand(2);
+        assertThat(outputStream.toString(), containsString("You must be logged in to check out a book"));
+    }
+
+    @Test
+    public void userCanCheckOutBookIfLoggedIn() {
+//        userSystem.currentUser = user;
+        String data = "Blink";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createBookLibrary();
+        userSystem.createAllUsers();
+        userSystem.authenticate(userSystem.allUsers.get(0).getLibraryNumber(), userSystem.allUsers.get(0).getPassword());
+        System.out.println(userSystem.getCurrentUser());
+        mainMenu.runCommand(2);
+        assertThat(outputStream.toString(), containsString("You have successfully checked out Blink, user: 111-1111" ));
+
+    }
+//
+    @Test
+    public void userCannotReturnBooksThatAreNotHeldByThem() {
+        userSystem.createAllUsers();
+        userSystem.authenticate("111-1111", "firstpass");
+        String data = "Blink";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        mainMenu.createBookLibrary();
+        mainMenu.runCommand(2);
+        userSystem.authenticate("222-2222", "secondpass");
+        String secondData = "Blink";
+        System.setIn(new ByteArrayInputStream(secondData.getBytes()));
+        mainMenu.runCommand(3);
+        assertThat(outputStream.toString(), containsString("You are not the holder of that book."));
     }
 
     @Test
@@ -136,6 +177,17 @@ public class MainMenuTest {
         mainMenu.createMovieLibrary();
         mainMenu.runCommand(6);
         assertThat(outputStream.toString(), containsString("You cannot return this movie"));
+    }
+
+    @Test
+    public void userCanLoginUsingMenuOpiton() {
+        String loginDetails = "111-1111" + "\npassword";
+        System.setIn(new ByteArrayInputStream(loginDetails.getBytes()));
+//        String password = "password";
+//        System.setIn(new ByteArrayInputStream(password.getBytes()));
+        mainMenu.runCommand(7);
+        assertThat(outputStream.toString(), containsString("Welcome User 111-1111"));
+
     }
 
     @Test

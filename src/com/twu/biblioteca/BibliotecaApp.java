@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.display.Message;
 import com.twu.biblioteca.menu.MainMenu;
+import com.twu.biblioteca.user.UserSystem;
 
 public class BibliotecaApp {
 
@@ -17,6 +18,7 @@ public class BibliotecaApp {
         MainMenu mainMenu = new MainMenu();
         mainMenu.createBookLibrary();
         mainMenu.createMovieLibrary();
+
         while(runMenu) {
             mainMenu.displayMenu();
             mainMenu.runCommand(mainMenu.menuScanner());

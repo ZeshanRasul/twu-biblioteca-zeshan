@@ -41,6 +41,11 @@ public class MovieTest {
     }
 
     @Test
+    public void getHolderShouldReturnNoUserByDefault() {
+        assertEquals(null, movie.getHolder());
+    }
+
+    @Test
     public void checkOutMethodShouldSetCheckedOutValueToTrue() {
         movie.checkOut();
         assertEquals(true, movie.checkedOut);

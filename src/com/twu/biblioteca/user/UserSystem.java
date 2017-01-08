@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Created by zeshanrasul on 07/01/2017.
  */
 public class UserSystem {
-    private ArrayList<User> allUsers;
+    public ArrayList<User> allUsers;
     public User currentUser;
 
     public ArrayList<User> createAllUsers() {
@@ -21,13 +21,25 @@ public class UserSystem {
 
     }
 
-    public void authenticate(String libNo, String pass) {
+    public User authenticate(String libNo, String pass) {
         for(User u : allUsers) {
             if (u.getLibraryNumber().equals(libNo)) {
                 if (u.getPassword().equals(pass)) {
-                    currentUser = u;
+                    setCurrentUser(u);
+                    return currentUser;
                 }
             }
         }
+        return null;
     }
+
+    public void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+
 }

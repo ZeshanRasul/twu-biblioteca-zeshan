@@ -37,7 +37,7 @@ public class BookTest {
     }
 
     @Test
-    public void getHolderShouldReturnTheNoUserByDefault() {
+    public void getHolderShouldReturnNoUserByDefault() {
         assertEquals(null, book.getHolder());
     }
 

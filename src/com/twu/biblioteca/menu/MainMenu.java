@@ -7,6 +7,8 @@ import com.twu.biblioteca.items.Book;
 import com.twu.biblioteca.items.Movie;
 import com.twu.biblioteca.librarycreators.LibraryCreator;
 import com.twu.biblioteca.librarycreators.MovieLibraryCreator;
+import com.twu.biblioteca.user.User;
+import com.twu.biblioteca.user.UserSystem;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,6 +24,7 @@ public class MainMenu {
     private MovieLibraryLister movieLibraryLister = new MovieLibraryLister();
     public ArrayList<Book> bookLibrary;
     public ArrayList<Movie> movieLibrary;
+    public UserSystem userSystem = new UserSystem();
 
     public static void displayMenu() {
         System.out.println();
@@ -34,7 +37,10 @@ public class MainMenu {
         System.out.println("4. List movies");
         System.out.println("5. Check out movie");
         System.out.println("6. Return movie");
+        System.out.println("7. Login");
+        System.out.println("8. Logout");
         System.out.println("9. Quit");
+        System.out.println("10. Check details");
     }
 
     public int menuScanner() {
@@ -59,8 +65,15 @@ public class MainMenu {
                     break;
             case 6: returnMovie();
                     break;
+            case 7: userSystem.createAllUsers();
+                    login();
+                    break;
+            case 8: logout();
+                    break;
             case 9: System.out.print("Thank you for using Biblioteca!");
                     return BibliotecaApp.runMenu = false;
+            case 10: checkDetails();
+                break;
             default:
                 System.out.print("Please enter a valid option!");
                 break;
@@ -82,17 +95,22 @@ public class MainMenu {
         Scanner newScanner = new Scanner(System.in);
         String bookName = newScanner.nextLine();
         System.out.println(bookName);
-        for (Book b : bookLibrary) {
-            if (b.getTitle().equals(bookName)) {
-                if (!b.checkedOut) {
-                    b.checkOut();
-                    System.out.println("You have successfully checked out " + b.getTitle());
-                    break;
-                } else {
-                    System.out.println("This book is not available");
+        if (userSystem.getCurrentUser() == null) {
+            System.out.println("You must be logged in to check out a book");
+        } else {
+            for (Book b : bookLibrary) {
+                if (b.getTitle().equals(bookName)) {
+                    if (!b.checkedOut) {
+                        b.checkOut();
+                        b.setHolder(userSystem.getCurrentUser());
+                        System.out.println("You have successfully checked out " + b.getTitle() + ",user: " + b.getHolder().getLibraryNumber());
+                        break;
+                    } else {
+                        System.out.println("This book is not available");
+                    }
                 }
-            }
 
+            }
         }
     }
 
@@ -102,14 +120,18 @@ public class MainMenu {
         Scanner newScanner = new Scanner(System.in);
         String bookName = newScanner.nextLine();
 //        System.out.println(bookName);
-        for (Book b : bookLibrary) {
-            if (b.getTitle().equals(bookName)) {
-                if (b.checkedOut) {
-                    b.returnBook();
-                    System.out.println("Thank you for returning " + bookName);
-                    break;
-                } else {
-                    System.out.println("You cannot return this book");
+        if (userSystem.getCurrentUser() == null) {
+            System.out.println("You must be logged in to return books");
+        } else {
+            for (Book b : bookLibrary) {
+                if (b.getTitle().equals(bookName)) {
+                    if (b.checkedOut && b.getHolder().getLibraryNumber() == userSystem.getCurrentUser().getLibraryNumber()) {
+                        b.returnBook();
+                        System.out.println("Thank you for returning " + bookName);
+                        break;
+                    } else {
+                        System.out.println("You cannot return this book");
+                    }
                 }
             }
         }
@@ -129,14 +151,19 @@ public class MainMenu {
         Scanner newScanner = new Scanner(System.in);
         String movieName = newScanner.nextLine();
         System.out.println(movieName);
-        for (Movie m : movieLibrary) {
-            if (m.getTitle().equals(movieName)) {
-                if (!m.checkedOut) {
-                    m.checkOut();
-                    System.out.println("You have successfully checked out " + m.getTitle());
-                    break;
-                } else {
-                    System.out.println("This movie is not available");
+        if (userSystem.getCurrentUser() == null) {
+            System.out.println("You must be logged in to check out a movies");
+        } else {
+            for (Movie m : movieLibrary) {
+                if (m.getTitle().equals(movieName)) {
+                    if (!m.checkedOut) {
+                        m.checkOut();
+                        m.setHolder(userSystem.getCurrentUser());
+                        System.out.println("You have successfully checked out " + m.getTitle());
+                        break;
+                    } else {
+                        System.out.println("This movie is not available");
+                    }
                 }
             }
         }
@@ -147,17 +174,54 @@ public class MainMenu {
         System.out.println("Which movie would you like to return?");
         Scanner newScanner = new Scanner(System.in);
         String movieName = newScanner.nextLine();
-        for (Movie m : movieLibrary) {
-            if (m.getTitle().equals(movieName)) {
-                if (m.checkedOut) {
-                    m.returnMovie();
-                    System.out.println("Thank you for returning " + m.getTitle());
-                    break;
-                } else {
-                    System.out.println("You cannot return this movie");
+        if (userSystem.getCurrentUser() == null) {
+            System.out.println("You must be logged in to return movies");
+        } else {
+            for (Movie m : movieLibrary) {
+                if (m.getTitle().equals(movieName)) {
+                    if (m.checkedOut && m.getHolder().getLibraryNumber() == userSystem.getCurrentUser().getLibraryNumber()) {
+                        m.returnMovie();
+                        System.out.println("Thank you for returning " + m.getTitle());
+                        break;
+                    } else {
+                        System.out.println("You cannot return this movie");
+                    }
                 }
             }
         }
     }
 
+    private void login() {
+        if (userSystem.getCurrentUser() == null) {
+            System.out.println();
+            System.out.println("Please enter your login number");
+            Scanner loginScanner = new Scanner(System.in);
+            String loginNumber = loginScanner.nextLine();
+            System.out.println("Please enter your password");
+            Scanner passScanner = new Scanner(System.in);
+            String password = passScanner.nextLine();
+            userSystem.authenticate(loginNumber, password);
+            System.out.println("Welcome User " + loginNumber);
+        } else {
+            System.out.println();
+            System.out.println("You are already logged in!");
+        }
+    }
+
+    private void checkDetails() {
+        System.out.println(userSystem.getCurrentUser().getLibraryNumber());
+        System.out.println((userSystem.getCurrentUser().getPassword()));
+    }
+
+
+    private void logout() {
+        if (userSystem.getCurrentUser() != null) {
+            System.out.println();
+            System.out.println("You have successfully logged out!");
+            userSystem.setCurrentUser(null);
+        } else {
+            System.out.println();
+            System.out.println("You are not logged in!");
+        }
+    }
 }
